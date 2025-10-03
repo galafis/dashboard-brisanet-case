@@ -609,6 +609,15 @@ function createAllCharts(data) {
     createCustomerAgeChart(data);
     createCustomerGenderChart(data);
     createCustomerSegmentChart(data);
+    
+    // Advanced visualizations
+    if (typeof createProductPerformanceHeatmap === 'function') {
+        createProductPerformanceHeatmap(data);
+        createRevenueTreemap(data);
+        createSunburstChart(data);
+        createWaterfallChart(data);
+        createGaugeCharts(data);
+    }
 }
 
 /**
