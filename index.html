@@ -3,136 +3,345 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Brisanet - Gabriel Demetrios Lafis</title>
+    <title>Dashboard Executivo Brisanet - Análise Estratégica de Telecomunicações</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <!-- HEADER -->
-        <div class="header">
-            <div class="logo-container">
-                <img src="assets/brisanet_logo.png" alt="Brisanet Logo">
-            </div>
-            <h1>Dashboard Comercial Brisanet</h1>
-            <p>Análise de Faturamento, Clientes e Regiões</p>
-        </div>
-        
-        <!-- KPIs -->
-        <div class="kpis">
-            <div class="kpi-card">
-                <h3>Faturamento Total (2025)</h3>
-                <p class="value">R$ 944k</p>
-            </div>
-            <div class="kpi-card">
-                <h3>Clientes Ativos</h3>
-                <p class="value success">84.7%</p>
-            </div>
-            <div class="kpi-card">
-                <h3>Taxa de Churn</h3>
-                <p class="value warning">15.3%</p>
-            </div>
-            <div class="kpi-card">
-                <h3>Idade Média Cliente</h3>
-                <p class="value">46 anos</p>
-            </div>
-        </div>
-        
-        <!-- CONTEÚDO PRINCIPAL -->
-        <div class="content">
-            <!-- SEÇÃO 1: FATURAMENTO -->
-            <div class="section">
-                <h2>📈 Faturamento Mensal</h2>
-                <div class="chart-container">
-                    <div id="chart1"></div>
-                </div>
-                <div class="insight-box">
-                    <h3>💡 Principais Insights</h3>
-                    <ul>
-                        <li><strong>Faturamento total de R$ 944k</strong> em 8 meses de 2025</li>
-                        <li>Pico de vendas em <strong>Março</strong> (R$ 126k)</li>
-                        <li>Performance estável acima de R$ 110k na maioria dos meses</li>
-                        <li>Taxa de churn de <strong>15,3%</strong> está acima da média do setor (10-12%)</li>
-                    </ul>
-                </div>
-                
-                <div class="grid-2">
-                    <div class="chart-container">
-                        <div id="chart2"></div>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <img src="assets/brisanet_logo.png" alt="Brisanet" class="logo">
+                    <div class="header-info">
+                        <h1>Dashboard Executivo</h1>
+                        <p>Análise Estratégica de Telecomunicações</p>
                     </div>
-                    <div class="chart-container">
-                        <div id="chart3"></div>
+                </div>
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">R$ 2.8B</span>
+                        <span class="stat-label">Receita Anual</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">4.2M</span>
+                        <span class="stat-label">Clientes Ativos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">98.7%</span>
+                        <span class="stat-label">Uptime</span>
                     </div>
                 </div>
             </div>
-            
-            <!-- SEÇÃO 2: ANÁLISE GEOGRÁFICA -->
-            <div class="section">
-                <h2>🗺️ Análise Geográfica</h2>
-                
-                <div class="chart-container">
-                    <div id="chart4"></div>
-                </div>
-                
-                <div class="insight-box">
-                    <h3>⚠️ Pegadinha Corrigida!</h3>
-                    <ul>
-                        <li><strong>80% dos dados originais</strong> tinham mapeamento incorreto de regiões</li>
-                        <li>Exemplo: RS (Sul) aparecia como "Nordeste"</li>
-                        <li>Todas as regiões foram <strong>corrigidas</strong> de acordo com o IBGE</li>
-                        <li><strong>Nordeste</strong> é a região core da Brisanet (líder de mercado)</li>
-                    </ul>
-                </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="dashboard-nav">
+            <div class="nav-container">
+                <button class="nav-btn active" data-section="overview">
+                    <i class="fas fa-chart-line"></i> Visão Geral
+                </button>
+                <button class="nav-btn" data-section="financial">
+                    <i class="fas fa-dollar-sign"></i> Financeiro
+                </button>
+                <button class="nav-btn" data-section="market">
+                    <i class="fas fa-globe"></i> Mercado
+                </button>
+                <button class="nav-btn" data-section="operations">
+                    <i class="fas fa-cogs"></i> Operações
+                </button>
+                <button class="nav-btn" data-section="strategy">
+                    <i class="fas fa-chess"></i> Estratégia
+                </button>
             </div>
-            
-            <!-- SEÇÃO 3: ANÁLISE DE CLIENTES -->
-            <div class="section">
-                <h2>👥 Análise de Clientes</h2>
-                
-                <div class="grid-2">
+        </nav>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Overview Section -->
+            <section id="overview" class="dashboard-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Visão Geral Executiva</h2>
+                    <div class="time-filter">
+                        <button class="time-btn active" data-period="12m">12M</button>
+                        <button class="time-btn" data-period="6m">6M</button>
+                        <button class="time-btn" data-period="3m">3M</button>
+                        <button class="time-btn" data-period="1m">1M</button>
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card primary">
+                        <div class="metric-header">
+                            <h3>Receita Total</h3>
+                            <i class="fas fa-arrow-up trend-up"></i>
+                        </div>
+                        <div class="metric-value">R$ 2.847B</div>
+                        <div class="metric-change">+12.3% vs ano anterior</div>
+                        <div class="metric-chart" id="revenue-trend"></div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h3>EBITDA</h3>
+                            <i class="fas fa-arrow-up trend-up"></i>
+                        </div>
+                        <div class="metric-value">R$ 1.142B</div>
+                        <div class="metric-change">+8.7% vs ano anterior</div>
+                        <div class="metric-chart" id="ebitda-trend"></div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h3>Base de Clientes</h3>
+                            <i class="fas fa-arrow-up trend-up"></i>
+                        </div>
+                        <div class="metric-value">4.2M</div>
+                        <div class="metric-change">+15.2% vs ano anterior</div>
+                        <div class="metric-chart" id="customers-trend"></div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h3>ARPU</h3>
+                            <i class="fas fa-arrow-down trend-down"></i>
+                        </div>
+                        <div class="metric-value">R$ 67.50</div>
+                        <div class="metric-change">-2.1% vs ano anterior</div>
+                        <div class="metric-chart" id="arpu-trend"></div>
+                    </div>
+                </div>
+
+                <div class="charts-row">
                     <div class="chart-container">
-                        <div id="chart5"></div>
+                        <h3>Evolução da Receita por Segmento</h3>
+                        <div id="revenue-segments-chart"></div>
                     </div>
                     <div class="chart-container">
-                        <div id="chart6"></div>
+                        <h3>Market Share Regional</h3>
+                        <div id="market-share-chart"></div>
                     </div>
                 </div>
-                
-                <div class="insight-box">
-                    <h3>💡 Insights de Clientes</h3>
-                    <ul>
-                        <li><strong>84,7% de clientes ativos</strong> - base sólida de retenção</li>
-                        <li>Taxa de churn de <strong>15,3%</strong> - oportunidade de melhoria</li>
-                        <li>Idade média de <strong>46 anos</strong> - público maduro e economicamente ativo</li>
-                        <li>Distribuição equilibrada de gênero</li>
-                    </ul>
+            </section>
+
+            <!-- Financial Section -->
+            <section id="financial" class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-dollar-sign"></i> Análise Financeira</h2>
+                </div>
+
+                <div class="financial-grid">
+                    <div class="financial-card">
+                        <h3>Demonstrativo de Resultados</h3>
+                        <div id="income-statement-chart"></div>
+                    </div>
+                    <div class="financial-card">
+                        <h3>Fluxo de Caixa</h3>
+                        <div id="cashflow-chart"></div>
+                    </div>
+                    <div class="financial-card">
+                        <h3>Margem EBITDA por Trimestre</h3>
+                        <div id="ebitda-margin-chart"></div>
+                    </div>
+                    <div class="financial-card">
+                        <h3>Investimentos em CAPEX</h3>
+                        <div id="capex-chart"></div>
+                    </div>
+                </div>
+
+                <div class="financial-insights">
+                    <div class="insight-card">
+                        <h4>Insights Financeiros</h4>
+                        <ul>
+                            <li><strong>Crescimento Sustentável:</strong> Receita cresceu 12.3% com margem EBITDA estável em 40.1%</li>
+                            <li><strong>Eficiência Operacional:</strong> Redução de 5% nos custos operacionais por cliente</li>
+                            <li><strong>Investimento em Infraestrutura:</strong> CAPEX de R$ 890M focado em expansão de fibra</li>
+                            <li><strong>Geração de Caixa:</strong> Fluxo de caixa livre positivo de R$ 425M</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Market Section -->
+            <section id="market" class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-globe"></i> Análise de Mercado</h2>
+                </div>
+
+                <div class="market-grid">
+                    <div class="market-card">
+                        <h3>Penetração por Estado</h3>
+                        <div id="market-penetration-chart"></div>
+                    </div>
+                    <div class="market-card">
+                        <h3>Análise Competitiva</h3>
+                        <div id="competitive-analysis-chart"></div>
+                    </div>
+                    <div class="market-card">
+                        <h3>Tendências do Setor</h3>
+                        <div id="industry-trends-chart"></div>
+                    </div>
+                    <div class="market-card">
+                        <h3>Oportunidades de Expansão</h3>
+                        <div id="expansion-opportunities-chart"></div>
+                    </div>
+                </div>
+
+                <div class="market-insights">
+                    <div class="insight-card">
+                        <h4>Insights de Mercado</h4>
+                        <ul>
+                            <li><strong>Liderança Regional:</strong> #1 em market share no Nordeste com 34% de participação</li>
+                            <li><strong>Crescimento Acelerado:</strong> Expansão de 28% em cidades do interior</li>
+                            <li><strong>Vantagem Competitiva:</strong> Menor latência e maior velocidade que concorrentes</li>
+                            <li><strong>Potencial de Crescimento:</strong> 2.3M de domicílios ainda não atendidos na região</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Operations Section -->
+            <section id="operations" class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-cogs"></i> Operações e Performance</h2>
+                </div>
+
+                <div class="operations-grid">
+                    <div class="ops-card">
+                        <h3>Qualidade de Serviço</h3>
+                        <div id="service-quality-chart"></div>
+                    </div>
+                    <div class="ops-card">
+                        <h3>Infraestrutura de Rede</h3>
+                        <div id="network-infrastructure-chart"></div>
+                    </div>
+                    <div class="ops-card">
+                        <h3>Satisfação do Cliente</h3>
+                        <div id="customer-satisfaction-chart"></div>
+                    </div>
+                    <div class="ops-card">
+                        <h3>Eficiência Operacional</h3>
+                        <div id="operational-efficiency-chart"></div>
+                    </div>
+                </div>
+
+                <div class="operations-kpis">
+                    <div class="kpi-grid">
+                        <div class="kpi-item">
+                            <span class="kpi-value">98.7%</span>
+                            <span class="kpi-label">Uptime da Rede</span>
+                        </div>
+                        <div class="kpi-item">
+                            <span class="kpi-value">4.6/5</span>
+                            <span class="kpi-label">NPS Score</span>
+                        </div>
+                        <div class="kpi-item">
+                            <span class="kpi-value">2.3min</span>
+                            <span class="kpi-label">Tempo Médio de Reparo</span>
+                        </div>
+                        <div class="kpi-item">
+                            <span class="kpi-value">89%</span>
+                            <span class="kpi-label">First Call Resolution</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Strategy Section -->
+            <section id="strategy" class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chess"></i> Estratégia e Roadmap</h2>
+                </div>
+
+                <div class="strategy-content">
+                    <div class="strategy-card">
+                        <h3>Roadmap Estratégico 2024-2026</h3>
+                        <div id="strategic-roadmap"></div>
+                    </div>
+
+                    <div class="initiatives-grid">
+                        <div class="initiative-card">
+                            <h4><i class="fas fa-rocket"></i> Expansão 5G</h4>
+                            <p>Implementação de rede 5G em 15 cidades até Q4/2024</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 65%"></div>
+                            </div>
+                            <span class="progress-text">65% concluído</span>
+                        </div>
+
+                        <div class="initiative-card">
+                            <h4><i class="fas fa-wifi"></i> Fibra Ótica</h4>
+                            <p>Expansão da rede de fibra para 500 mil novos domicílios</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 78%"></div>
+                            </div>
+                            <span class="progress-text">78% concluído</span>
+                        </div>
+
+                        <div class="initiative-card">
+                            <h4><i class="fas fa-cloud"></i> Cloud Services</h4>
+                            <p>Lançamento de serviços de cloud computing para empresas</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 42%"></div>
+                            </div>
+                            <span class="progress-text">42% concluído</span>
+                        </div>
+
+                        <div class="initiative-card">
+                            <h4><i class="fas fa-mobile-alt"></i> IoT Platform</h4>
+                            <p>Desenvolvimento de plataforma IoT para smart cities</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 28%"></div>
+                            </div>
+                            <span class="progress-text">28% concluído</span>
+                        </div>
+                    </div>
+
+                    <div class="strategic-insights">
+                        <div class="insight-card">
+                            <h4>Recomendações Estratégicas</h4>
+                            <div class="recommendations">
+                                <div class="recommendation">
+                                    <h5><i class="fas fa-bullseye"></i> Prioridade Alta</h5>
+                                    <p>Acelerar expansão 5G para capturar market share antes dos concorrentes</p>
+                                </div>
+                                <div class="recommendation">
+                                    <h5><i class="fas fa-chart-line"></i> Oportunidade</h5>
+                                    <p>Desenvolver parcerias estratégicas para serviços de edge computing</p>
+                                </div>
+                                <div class="recommendation">
+                                    <h5><i class="fas fa-shield-alt"></i> Risco</h5>
+                                    <p>Monitorar regulamentações sobre neutralidade de rede</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <div class="footer-content">
+                <p>&copy; 2024 Brisanet. Dashboard desenvolvido por Gabriel Demetrios Lafis</p>
+                <div class="footer-links">
+                    <a href="#" onclick="exportDashboard()"><i class="fas fa-download"></i> Exportar</a>
+                    <a href="#" onclick="refreshData()"><i class="fas fa-sync"></i> Atualizar</a>
+                    <a href="#" onclick="showSettings()"><i class="fas fa-cog"></i> Configurações</a>
                 </div>
             </div>
-            
-            <!-- SEÇÃO 4: RECOMENDAÇÕES -->
-            <div class="section">
-                <h2>🎯 Recomendações Estratégicas</h2>
-                
-                <div class="insight-box" style="background: #d1ecf1; border-left-color: #0c5460;">
-                    <h3 style="color: #0c5460;">📋 Ações Recomendadas</h3>
-                    <ul style="color: #0c5460;">
-                        <li><strong>Reduzir Churn:</strong> Implementar programa de retenção para reduzir de 15,3% para 10% (potencial de +R$ 300k/ano em MRR)</li>
-                        <li><strong>Cross-Sell:</strong> Incentivar clientes de fibra a adquirirem planos móveis</li>
-                        <li><strong>Expansão Regional:</strong> Focar em cidades médias do Nordeste e Sudeste</li>
-                        <li><strong>Dashboard em Tempo Real:</strong> Implementar monitoramento contínuo de KPIs</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <!-- FOOTER -->
-        <div class="footer">
-            <p><strong>Dashboard Comercial Brisanet</strong></p>
-            <p>Desenvolvido por <strong>Gabriel Demetrios Lafis</strong></p>
-            <p>Case Técnico - Outubro 2025</p>
-            <p style="font-size: 0.9rem; margin-top: 10px;"><em>Todos os dados foram tratados e as pegadinhas corrigidas</em></p>
-        </div>
+        </footer>
     </div>
-    
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p>Carregando dados...</p>
+    </div>
+
+    <!-- Scripts -->
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
     <script src="js/main.js"></script>
 </body>
