@@ -294,14 +294,16 @@
                             <table class="data-table" id="products-table">
                                 <thead>
                                     <tr>
+                                        <th style="text-align: center; width: 80px;">Ranking</th>
                                         <th>Produto</th>
-                                        <th>Faturamento</th>
-                                        <th>Vendas</th>
-                                        <th>Ticket Médio</th>
-                                        <th>% do Total</th>
+                                        <th style="text-align: right;">Faturamento</th>
+                                        <th style="text-align: right;">Vendas</th>
+                                        <th style="text-align: right;">Ticket Médio</th>
+                                        <th style="text-align: center; width: 100px;">Variação</th>
+                                        <th style="width: 200px;">Performance</th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody id="products-table-body"></tbody>
                             </table>
                         </div>
                     </div>
@@ -337,6 +339,28 @@
                             <div class="chart-body">
                                 <div id="chart-cities-revenue"></div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h3 class="table-title">Detalhamento por Estado</h3>
+                        </div>
+                        <div class="table-body">
+                            <table class="data-table" id="geography-table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center; width: 80px;">Ranking</th>
+                                        <th>Estado</th>
+                                        <th style="text-align: right;">Faturamento</th>
+                                        <th style="text-align: right;">Vendas</th>
+                                        <th style="text-align: right;">Clientes</th>
+                                        <th style="text-align: center; width: 100px;">Variação</th>
+                                        <th style="width: 200px;">Performance</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="geography-table-body"></tbody>
+                            </table>
                         </div>
                     </div>
                 </section>
@@ -566,6 +590,8 @@
     </div>
 
     <!-- Custom JavaScript -->
+    <script src="js/sparklines.js"></script>
+    <script src="js/tables_enhanced.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

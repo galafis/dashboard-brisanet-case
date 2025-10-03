@@ -808,8 +808,18 @@ async function initDashboard() {
     // Update all sections
     updateKPIs(data);
     createAllCharts(data);
-    createProductsTable(data);
-    createGeographyTable(data);
+    
+    // Use enhanced tables if available, otherwise fallback to basic
+    if (typeof createEnhancedProductsTable === 'function') {
+        createEnhancedProductsTable(data);
+        createEnhancedGeographyTable(data);
+        addExportButtons();
+        addSparklinesToKPIs(data);
+    } else {
+        createProductsTable(data);
+        createGeographyTable(data);
+    }
+    
     updateInsightsSection(data);
     
     // Initialize navigation

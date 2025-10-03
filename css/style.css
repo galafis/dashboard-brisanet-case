@@ -1223,3 +1223,385 @@ body {
     }
 }
 
+
+/* ============================================================================
+   ADVANCED VISUAL COMPONENTS - SUPREME EDITION
+   ============================================================================ */
+
+/* Sparklines */
+.kpi-card-sparkline {
+    margin-top: 12px;
+    height: 40px;
+    position: relative;
+}
+
+.sparkline-value {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Change Indicators */
+.change-indicator {
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.change-indicator.positive {
+    color: #10B981;
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.change-indicator.negative {
+    color: #EF4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.change-indicator.neutral {
+    color: #6B7280;
+    background: rgba(107, 114, 128, 0.1);
+}
+
+/* Progress Bars */
+.progress-bar-container {
+    width: 100%;
+    background: #2A3347;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FF6B00, #FF8C42);
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.progress-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #B8C5D6;
+    margin-top: 4px;
+}
+
+/* Ranking Badges */
+.ranking-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 12px;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+.ranking-badge:hover {
+    transform: scale(1.05);
+}
+
+.badge-small {
+    padding: 2px 6px;
+    font-size: 10px;
+}
+
+.badge-large {
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+/* Heatmap Cells */
+.heatmap-cell {
+    padding: 12px;
+    text-align: center;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.heatmap-cell:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced Tables */
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.data-table thead th {
+    background: linear-gradient(135deg, #1E2536 0%, #252D42 100%);
+    color: #FFFFFF;
+    font-weight: 700;
+    text-align: left;
+    padding: 16px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #FF6B00;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.data-table tbody tr {
+    background: #1A1F2E;
+    transition: all 0.2s ease;
+}
+
+.data-table tbody tr:hover {
+    background: #252D42;
+    transform: translateX(4px);
+}
+
+.data-table tbody td {
+    padding: 14px 16px;
+    color: #B8C5D6;
+    font-size: 14px;
+    border-bottom: 1px solid #2A3347;
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Table with Progress Bars */
+.table-progress-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.table-progress-value {
+    min-width: 100px;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.table-progress-bar {
+    flex: 1;
+}
+
+/* Mini Donut Charts */
+.mini-donut-container {
+    display: inline-block;
+    position: relative;
+}
+
+/* Export Buttons */
+.export-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.btn-export {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #2A3347 0%, #1E2536 100%);
+    border: 1px solid #3B82F6;
+    color: #3B82F6;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-export:hover {
+    background: #3B82F6;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-export i {
+    font-size: 14px;
+}
+
+/* Filter Controls */
+.filter-controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #B8C5D6;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-select {
+    padding: 10px 16px;
+    background: #1A1F2E;
+    border: 1px solid #2A3347;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.filter-select:hover {
+    border-color: #3B82F6;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #FF6B00;
+    box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+}
+
+/* Metric Cards with Sparklines */
+.metric-card-enhanced {
+    background: linear-gradient(135deg, #1E2536 0%, #252D42 100%);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #2A3347;
+    transition: all 0.3s ease;
+}
+
+.metric-card-enhanced:hover {
+    border-color: #FF6B00;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(255, 107, 0, 0.15);
+}
+
+.metric-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.metric-card-title {
+    font-size: 13px;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.metric-card-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+}
+
+.metric-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #2A3347;
+}
+
+/* Comparison Table */
+.comparison-table {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.comparison-item {
+    background: #1A1F2E;
+    border-radius: 8px;
+    padding: 16px;
+    border-left: 4px solid #FF6B00;
+}
+
+.comparison-label {
+    font-size: 12px;
+    color: #6B7280;
+    margin-bottom: 8px;
+}
+
+.comparison-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.comparison-change {
+    margin-top: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .export-buttons {
+        flex-direction: column;
+    }
+    
+    .btn-export {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .filter-controls {
+        flex-direction: column;
+    }
+    
+    .filter-select {
+        width: 100%;
+    }
+    
+    .comparison-table {
+        grid-template-columns: 1fr;
+    }
+}
+
