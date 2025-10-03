@@ -3,346 +3,569 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Executivo Brisanet - Análise Estratégica de Telecomunicações</title>
+    <title>Dashboard Comercial Brisanet | Análise de Dados</title>
+    <meta name="description" content="Dashboard interativo de análise comercial da Brisanet com insights sobre faturamento, clientes e performance de vendas">
+    <meta name="author" content="Gabriel Demetrios Lafis">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/brisanet_logo.svg">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Header -->
-        <header class="dashboard-header">
-            <div class="header-content">
-                <div class="logo-section">
-                    <img src="assets/brisanet_logo.png" alt="Brisanet" class="logo">
-                    <div class="header-info">
-                        <h1>Dashboard Executivo</h1>
-                        <p>Análise Estratégica de Telecomunicações</p>
-                    </div>
-                </div>
-                <div class="header-stats">
-                    <div class="stat-item">
-                        <span class="stat-value">R$ 2.8B</span>
-                        <span class="stat-label">Receita Anual</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-value">4.2M</span>
-                        <span class="stat-label">Clientes Ativos</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-value">98.7%</span>
-                        <span class="stat-label">Uptime</span>
-                    </div>
-                </div>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <img src="assets/brisanet_logo.svg" alt="Brisanet">
             </div>
-        </header>
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Carregando dados...</p>
+        </div>
+    </div>
 
-        <!-- Navigation -->
-        <nav class="dashboard-nav">
-            <div class="nav-container">
-                <button class="nav-btn active" data-section="overview">
-                    <i class="fas fa-chart-line"></i> Visão Geral
-                </button>
-                <button class="nav-btn" data-section="financial">
-                    <i class="fas fa-dollar-sign"></i> Financeiro
-                </button>
-                <button class="nav-btn" data-section="market">
-                    <i class="fas fa-globe"></i> Mercado
-                </button>
-                <button class="nav-btn" data-section="operations">
-                    <i class="fas fa-cogs"></i> Operações
-                </button>
-                <button class="nav-btn" data-section="strategy">
-                    <i class="fas fa-chess"></i> Estratégia
-                </button>
+    <!-- Main Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/brisanet_logo.svg" alt="Brisanet" class="sidebar-logo">
+                <h1 class="sidebar-title">Dashboard<br>Comercial</h1>
             </div>
-        </nav>
+            
+            <nav class="sidebar-nav">
+                <a href="#overview" class="nav-item active" data-section="overview">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Visão Geral</span>
+                </a>
+                <a href="#revenue" class="nav-item" data-section="revenue">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>Faturamento</span>
+                </a>
+                <a href="#products" class="nav-item" data-section="products">
+                    <i class="fas fa-box"></i>
+                    <span>Produtos</span>
+                </a>
+                <a href="#geography" class="nav-item" data-section="geography">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Geografia</span>
+                </a>
+                <a href="#customers" class="nav-item" data-section="customers">
+                    <i class="fas fa-users"></i>
+                    <span>Clientes</span>
+                </a>
+                <a href="#insights" class="nav-item" data-section="insights">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Insights</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="footer-info">
+                    <p class="footer-label">Última Atualização</p>
+                    <p class="footer-value" id="last-update">-</p>
+                </div>
+                <div class="footer-info">
+                    <p class="footer-label">Período</p>
+                    <p class="footer-value" id="period-range">-</p>
+                </div>
+            </div>
+        </aside>
 
         <!-- Main Content -->
-        <main class="dashboard-main">
-            <!-- Overview Section -->
-            <section id="overview" class="dashboard-section active">
-                <div class="section-header">
-                    <h2><i class="fas fa-chart-line"></i> Visão Geral Executiva</h2>
-                    <div class="time-filter">
-                        <button class="time-btn active" data-period="12m">12M</button>
-                        <button class="time-btn" data-period="6m">6M</button>
-                        <button class="time-btn" data-period="3m">3M</button>
-                        <button class="time-btn" data-period="1m">1M</button>
-                    </div>
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-left">
+                    <h2 class="page-title" id="page-title">Visão Geral</h2>
+                    <p class="page-subtitle" id="page-subtitle">Principais métricas e indicadores</p>
                 </div>
-
-                <div class="metrics-grid">
-                    <div class="metric-card primary">
-                        <div class="metric-header">
-                            <h3>Receita Total</h3>
-                            <i class="fas fa-arrow-up trend-up"></i>
-                        </div>
-                        <div class="metric-value">R$ 2.847B</div>
-                        <div class="metric-change">+12.3% vs ano anterior</div>
-                        <div class="metric-chart" id="revenue-trend"></div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-header">
-                            <h3>EBITDA</h3>
-                            <i class="fas fa-arrow-up trend-up"></i>
-                        </div>
-                        <div class="metric-value">R$ 1.142B</div>
-                        <div class="metric-change">+8.7% vs ano anterior</div>
-                        <div class="metric-chart" id="ebitda-trend"></div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-header">
-                            <h3>Base de Clientes</h3>
-                            <i class="fas fa-arrow-up trend-up"></i>
-                        </div>
-                        <div class="metric-value">4.2M</div>
-                        <div class="metric-change">+15.2% vs ano anterior</div>
-                        <div class="metric-chart" id="customers-trend"></div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-header">
-                            <h3>ARPU</h3>
-                            <i class="fas fa-arrow-down trend-down"></i>
-                        </div>
-                        <div class="metric-value">R$ 67.50</div>
-                        <div class="metric-change">-2.1% vs ano anterior</div>
-                        <div class="metric-chart" id="arpu-trend"></div>
-                    </div>
+                <div class="header-right">
+                    <button class="btn-icon" onclick="refreshData()" title="Atualizar dados">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button class="btn-icon" onclick="exportDashboard()" title="Exportar relatório">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="btn-icon" onclick="toggleFullscreen()" title="Tela cheia">
+                        <i class="fas fa-expand"></i>
+                    </button>
                 </div>
+            </header>
 
-                <div class="charts-row">
-                    <div class="chart-container">
-                        <h3>Evolução da Receita por Segmento</h3>
-                        <div id="revenue-segments-chart"></div>
-                    </div>
-                    <div class="chart-container">
-                        <h3>Market Share Regional</h3>
-                        <div id="market-share-chart"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Financial Section -->
-            <section id="financial" class="dashboard-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-dollar-sign"></i> Análise Financeira</h2>
-                </div>
-
-                <div class="financial-grid">
-                    <div class="financial-card">
-                        <h3>Demonstrativo de Resultados</h3>
-                        <div id="income-statement-chart"></div>
-                    </div>
-                    <div class="financial-card">
-                        <h3>Fluxo de Caixa</h3>
-                        <div id="cashflow-chart"></div>
-                    </div>
-                    <div class="financial-card">
-                        <h3>Margem EBITDA por Trimestre</h3>
-                        <div id="ebitda-margin-chart"></div>
-                    </div>
-                    <div class="financial-card">
-                        <h3>Investimentos em CAPEX</h3>
-                        <div id="capex-chart"></div>
-                    </div>
-                </div>
-
-                <div class="financial-insights">
-                    <div class="insight-card">
-                        <h4>Insights Financeiros</h4>
-                        <ul>
-                            <li><strong>Crescimento Sustentável:</strong> Receita cresceu 12.3% com margem EBITDA estável em 40.1%</li>
-                            <li><strong>Eficiência Operacional:</strong> Redução de 5% nos custos operacionais por cliente</li>
-                            <li><strong>Investimento em Infraestrutura:</strong> CAPEX de R$ 890M focado em expansão de fibra</li>
-                            <li><strong>Geração de Caixa:</strong> Fluxo de caixa livre positivo de R$ 425M</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Market Section -->
-            <section id="market" class="dashboard-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-globe"></i> Análise de Mercado</h2>
-                </div>
-
-                <div class="market-grid">
-                    <div class="market-card">
-                        <h3>Penetração por Estado</h3>
-                        <div id="market-penetration-chart"></div>
-                    </div>
-                    <div class="market-card">
-                        <h3>Análise Competitiva</h3>
-                        <div id="competitive-analysis-chart"></div>
-                    </div>
-                    <div class="market-card">
-                        <h3>Tendências do Setor</h3>
-                        <div id="industry-trends-chart"></div>
-                    </div>
-                    <div class="market-card">
-                        <h3>Oportunidades de Expansão</h3>
-                        <div id="expansion-opportunities-chart"></div>
-                    </div>
-                </div>
-
-                <div class="market-insights">
-                    <div class="insight-card">
-                        <h4>Insights de Mercado</h4>
-                        <ul>
-                            <li><strong>Liderança Regional:</strong> #1 em market share no Nordeste com 34% de participação</li>
-                            <li><strong>Crescimento Acelerado:</strong> Expansão de 28% em cidades do interior</li>
-                            <li><strong>Vantagem Competitiva:</strong> Menor latência e maior velocidade que concorrentes</li>
-                            <li><strong>Potencial de Crescimento:</strong> 2.3M de domicílios ainda não atendidos na região</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Operations Section -->
-            <section id="operations" class="dashboard-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-cogs"></i> Operações e Performance</h2>
-                </div>
-
-                <div class="operations-grid">
-                    <div class="ops-card">
-                        <h3>Qualidade de Serviço</h3>
-                        <div id="service-quality-chart"></div>
-                    </div>
-                    <div class="ops-card">
-                        <h3>Infraestrutura de Rede</h3>
-                        <div id="network-infrastructure-chart"></div>
-                    </div>
-                    <div class="ops-card">
-                        <h3>Satisfação do Cliente</h3>
-                        <div id="customer-satisfaction-chart"></div>
-                    </div>
-                    <div class="ops-card">
-                        <h3>Eficiência Operacional</h3>
-                        <div id="operational-efficiency-chart"></div>
-                    </div>
-                </div>
-
-                <div class="operations-kpis">
+            <!-- Content Sections -->
+            <div class="content-body">
+                <!-- Overview Section -->
+                <section id="overview-section" class="content-section active">
+                    <!-- KPI Cards -->
                     <div class="kpi-grid">
-                        <div class="kpi-item">
-                            <span class="kpi-value">98.7%</span>
-                            <span class="kpi-label">Uptime da Rede</span>
-                        </div>
-                        <div class="kpi-item">
-                            <span class="kpi-value">4.6/5</span>
-                            <span class="kpi-label">NPS Score</span>
-                        </div>
-                        <div class="kpi-item">
-                            <span class="kpi-value">2.3min</span>
-                            <span class="kpi-label">Tempo Médio de Reparo</span>
-                        </div>
-                        <div class="kpi-item">
-                            <span class="kpi-value">89%</span>
-                            <span class="kpi-label">First Call Resolution</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Strategy Section -->
-            <section id="strategy" class="dashboard-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-chess"></i> Estratégia e Roadmap</h2>
-                </div>
-
-                <div class="strategy-content">
-                    <div class="strategy-card">
-                        <h3>Roadmap Estratégico 2024-2026</h3>
-                        <div id="strategic-roadmap"></div>
-                    </div>
-
-                    <div class="initiatives-grid">
-                        <div class="initiative-card">
-                            <h4><i class="fas fa-rocket"></i> Expansão 5G</h4>
-                            <p>Implementação de rede 5G em 15 cidades até Q4/2024</p>
-                            <div class="progress-bar">
-                                <div class="progress" style="width: 65%"></div>
+                        <div class="kpi-card primary">
+                            <div class="kpi-icon">
+                                <i class="fas fa-dollar-sign"></i>
                             </div>
-                            <span class="progress-text">65% concluído</span>
+                            <div class="kpi-content">
+                                <p class="kpi-label">Faturamento Total</p>
+                                <h3 class="kpi-value" id="kpi-revenue">-</h3>
+                                <p class="kpi-change positive" id="kpi-revenue-change">-</p>
+                            </div>
                         </div>
 
-                        <div class="initiative-card">
-                            <h4><i class="fas fa-wifi"></i> Fibra Ótica</h4>
-                            <p>Expansão da rede de fibra para 500 mil novos domicílios</p>
-                            <div class="progress-bar">
-                                <div class="progress" style="width: 78%"></div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-shopping-cart"></i>
                             </div>
-                            <span class="progress-text">78% concluído</span>
+                            <div class="kpi-content">
+                                <p class="kpi-label">Total de Vendas</p>
+                                <h3 class="kpi-value" id="kpi-sales">-</h3>
+                                <p class="kpi-change" id="kpi-sales-change">-</p>
+                            </div>
                         </div>
 
-                        <div class="initiative-card">
-                            <h4><i class="fas fa-cloud"></i> Cloud Services</h4>
-                            <p>Lançamento de serviços de cloud computing para empresas</p>
-                            <div class="progress-bar">
-                                <div class="progress" style="width: 42%"></div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-receipt"></i>
                             </div>
-                            <span class="progress-text">42% concluído</span>
+                            <div class="kpi-content">
+                                <p class="kpi-label">Ticket Médio</p>
+                                <h3 class="kpi-value" id="kpi-ticket">-</h3>
+                                <p class="kpi-change" id="kpi-ticket-change">-</p>
+                            </div>
                         </div>
 
-                        <div class="initiative-card">
-                            <h4><i class="fas fa-mobile-alt"></i> IoT Platform</h4>
-                            <p>Desenvolvimento de plataforma IoT para smart cities</p>
-                            <div class="progress-bar">
-                                <div class="progress" style="width: 28%"></div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-users"></i>
                             </div>
-                            <span class="progress-text">28% concluído</span>
+                            <div class="kpi-content">
+                                <p class="kpi-label">Total de Clientes</p>
+                                <h3 class="kpi-value" id="kpi-customers">-</h3>
+                                <p class="kpi-change" id="kpi-customers-change">-</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="strategic-insights">
-                        <div class="insight-card">
-                            <h4>Recomendações Estratégicas</h4>
-                            <div class="recommendations">
-                                <div class="recommendation">
-                                    <h5><i class="fas fa-bullseye"></i> Prioridade Alta</h5>
-                                    <p>Acelerar expansão 5G para capturar market share antes dos concorrentes</p>
-                                </div>
-                                <div class="recommendation">
-                                    <h5><i class="fas fa-chart-line"></i> Oportunidade</h5>
-                                    <p>Desenvolver parcerias estratégicas para serviços de edge computing</p>
-                                </div>
-                                <div class="recommendation">
-                                    <h5><i class="fas fa-shield-alt"></i> Risco</h5>
-                                    <p>Monitorar regulamentações sobre neutralidade de rede</p>
+                    <!-- Charts Row 1 -->
+                    <div class="charts-row">
+                        <div class="chart-card large">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Evolução do Faturamento Mensal</h3>
+                                <div class="chart-actions">
+                                    <button class="btn-chart-action" title="Mais opções">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
                                 </div>
                             </div>
+                            <div class="chart-body">
+                                <div id="chart-revenue-monthly"></div>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Status de Clientes</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div id="chart-customer-status"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </main>
 
-        <!-- Footer -->
-        <footer class="dashboard-footer">
-            <div class="footer-content">
-                <p>&copy; 2024 Brisanet. Dashboard desenvolvido por Gabriel Demetrios Lafis</p>
-                <div class="footer-links">
-                    <a href="#" onclick="exportDashboard()"><i class="fas fa-download"></i> Exportar</a>
-                    <a href="#" onclick="refreshData()"><i class="fas fa-sync"></i> Atualizar</a>
-                    <a href="#" onclick="showSettings()"><i class="fas fa-cog"></i> Configurações</a>
-                </div>
+                    <!-- Charts Row 2 -->
+                    <div class="charts-row">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Top 5 Estados</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div id="chart-top-states"></div>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Distribuição por Segmento</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div id="chart-segments"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Revenue Section -->
+                <section id="revenue-section" class="content-section">
+                    <div class="charts-row">
+                        <div class="chart-card large">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Faturamento Mensal Detalhado</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div id="chart-revenue-detailed"></div>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Métricas de Faturamento</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div class="metrics-list">
+                                    <div class="metric-item">
+                                        <span class="metric-label">Média Mensal</span>
+                                        <span class="metric-value" id="metric-avg-monthly">-</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">Maior Faturamento</span>
+                                        <span class="metric-value" id="metric-max-monthly">-</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">Menor Faturamento</span>
+                                        <span class="metric-value" id="metric-min-monthly">-</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">Crescimento Médio</span>
+                                        <span class="metric-value" id="metric-growth">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-row">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Faturamento por Região</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div id="chart-revenue-region"></div>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Faturamento por Segmento</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div id="chart-revenue-segment"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Products Section -->
+                <section id="products-section" class="content-section">
+                    <div class="charts-row">
+                        <div class="chart-card large">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Análise de Produtos</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div id="chart-products-analysis"></div>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Participação no Faturamento</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div id="chart-products-share"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h3 class="table-title">Detalhamento por Produto</h3>
+                        </div>
+                        <div class="table-body">
+                            <table class="data-table" id="products-table">
+                                <thead>
+                                    <tr>
+                                        <th>Produto</th>
+                                        <th>Faturamento</th>
+                                        <th>Vendas</th>
+                                        <th>Ticket Médio</th>
+                                        <th>% do Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Geography Section -->
+                <section id="geography-section" class="content-section">
+                    <div class="charts-row">
+                        <div class="chart-card large">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Faturamento por Estado</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div id="chart-states-revenue"></div>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Distribuição Regional</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div id="chart-regional-distribution"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-row">
+                        <div class="chart-card full">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Top 20 Cidades por Faturamento</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div id="chart-cities-revenue"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Customers Section -->
+                <section id="customers-section" class="content-section">
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <p class="kpi-label">Clientes Ativos</p>
+                                <h3 class="kpi-value" id="kpi-active-customers">-</h3>
+                                <p class="kpi-change" id="kpi-active-change">-</p>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-user-times"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <p class="kpi-label">Taxa de Churn</p>
+                                <h3 class="kpi-value" id="kpi-churn">-</h3>
+                                <p class="kpi-change negative" id="kpi-churn-change">-</p>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-birthday-cake"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <p class="kpi-label">Idade Média</p>
+                                <h3 class="kpi-value" id="kpi-avg-age">-</h3>
+                                <p class="kpi-change" id="kpi-age-change">-</p>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <p class="kpi-label">Renda Média</p>
+                                <h3 class="kpi-value" id="kpi-avg-income">-</h3>
+                                <p class="kpi-change" id="kpi-income-change">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-row">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Distribuição por Faixa Etária</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div id="chart-age-distribution"></div>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Distribuição por Gênero</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div id="chart-gender-distribution"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-row">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Clientes por Segmento</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div id="chart-customers-segment"></div>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Top 10 Vendedores</h3>
+                            </div>
+                            <div class="chart-body">
+                                <div id="chart-top-sellers"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Insights Section -->
+                <section id="insights-section" class="content-section">
+                    <div class="insights-grid">
+                        <div class="insight-card priority-high">
+                            <div class="insight-header">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <h3>Alta Prioridade</h3>
+                            </div>
+                            <div class="insight-body">
+                                <h4>Taxa de Churn Requer Atenção</h4>
+                                <p>Com 15,3% de churn, há oportunidade de implementar programa proativo de retenção que pode recuperar R$ 1,5M+ em receita anual.</p>
+                                <div class="insight-actions">
+                                    <button class="btn-insight">Ver Detalhes</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="insight-card priority-medium">
+                            <div class="insight-header">
+                                <i class="fas fa-chart-line"></i>
+                                <h3>Oportunidade</h3>
+                            </div>
+                            <div class="insight-body">
+                                <h4>Potencial de Upselling</h4>
+                                <p>Fibra 300MB é o produto mais vendido. Campanha de upgrade para planos superiores pode aumentar ARPU em 15-20%.</p>
+                                <div class="insight-actions">
+                                    <button class="btn-insight">Ver Detalhes</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="insight-card priority-low">
+                            <div class="insight-header">
+                                <i class="fas fa-lightbulb"></i>
+                                <h3>Insight</h3>
+                            </div>
+                            <div class="insight-body">
+                                <h4>Expansão Geográfica</h4>
+                                <p>São Paulo e Brasília lideram em faturamento. Cidades adjacentes apresentam oportunidades de expansão com ROI 25%+.</p>
+                                <div class="insight-actions">
+                                    <button class="btn-insight">Ver Detalhes</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="insight-card priority-medium">
+                            <div class="insight-header">
+                                <i class="fas fa-users"></i>
+                                <h3>Performance</h3>
+                            </div>
+                            <div class="insight-body">
+                                <h4>Padronização de Vendas</h4>
+                                <p>Variação significativa entre vendedores. Treinamento estruturado pode elevar performance média em 10-15%.</p>
+                                <div class="insight-actions">
+                                    <button class="btn-insight">Ver Detalhes</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="insight-card priority-high">
+                            <div class="insight-header">
+                                <i class="fas fa-trophy"></i>
+                                <h3">Destaque</h3>
+                            </div>
+                            <div class="insight-body">
+                                <h4>Crescimento Consistente</h4>
+                                <p>Faturamento médio mensal de R$ 118K demonstra crescimento sólido. Base de 15.000 clientes oferece economia de escala.</p>
+                                <div class="insight-actions">
+                                    <button class="btn-insight">Ver Detalhes</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="insight-card priority-low">
+                            <div class="insight-header">
+                                <i class="fas fa-shield-alt"></i>
+                                <h3>Risco</h3>
+                            </div>
+                            <div class="insight-body">
+                                <h4>Concentração Regional</h4>
+                                <p>Forte dependência de poucos estados. Diversificação geográfica pode reduzir riscos e aumentar resiliência.</p>
+                                <div class="insight-actions">
+                                    <button class="btn-insight">Ver Detalhes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recommendations-card">
+                        <div class="recommendations-header">
+                            <h3><i class="fas fa-tasks"></i> Recomendações Estratégicas</h3>
+                        </div>
+                        <div class="recommendations-body">
+                            <div class="recommendation-item">
+                                <div class="recommendation-number">1</div>
+                                <div class="recommendation-content">
+                                    <h4>Programa de Retenção Proativa</h4>
+                                    <p>Implementar sistema de early warning para clientes em risco, com ações personalizadas de retenção.</p>
+                                    <span class="recommendation-impact">Impacto: Alto | Prazo: Curto (0-6 meses)</span>
+                                </div>
+                            </div>
+
+                            <div class="recommendation-item">
+                                <div class="recommendation-number">2</div>
+                                <div class="recommendation-content">
+                                    <h4>Campanha de Upselling Direcionada</h4>
+                                    <p>Migração de clientes Fibra 300MB para planos superiores com ofertas limitadas e benefícios tangíveis.</p>
+                                    <span class="recommendation-impact">Impacto: Alto | Prazo: Curto (0-6 meses)</span>
+                                </div>
+                            </div>
+
+                            <div class="recommendation-item">
+                                <div class="recommendation-number">3</div>
+                                <div class="recommendation-content">
+                                    <h4>Expansão Geográfica Estratégica</h4>
+                                    <p>Priorizar cidades adjacentes aos mercados atuais, otimizando CAPEX e aproveitando infraestrutura.</p>
+                                    <span class="recommendation-impact">Impacto: Médio | Prazo: Médio (6-12 meses)</span>
+                                </div>
+                            </div>
+
+                            <div class="recommendation-item">
+                                <div class="recommendation-number">4</div>
+                                <div class="recommendation-content">
+                                    <h4>Padronização de Performance de Vendas</h4>
+                                    <p>Implementar playbooks e treinamento estruturado para elevar performance média da equipe.</p>
+                                    <span class="recommendation-impact">Impacto: Médio | Prazo: Curto (0-6 meses)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-        </footer>
+        </main>
     </div>
 
-    <!-- Loading Overlay -->
-    <div id="loading-overlay" class="loading-overlay">
-        <div class="loading-spinner"></div>
-        <p>Carregando dados...</p>
-    </div>
-
-    <!-- Scripts -->
-    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <!-- Custom JavaScript -->
     <script src="js/main.js"></script>
 </body>
 </html>
