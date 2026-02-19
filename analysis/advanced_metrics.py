@@ -251,35 +251,36 @@ def analise_temporal_avancada():
 # EXECUTAR ANÁLISES
 # ============================================================================
 
-print("Calculando métricas avançadas...")
 
-metricas_avancadas = calcular_metricas_avancadas()
-produtos_detalhado = analise_produtos_detalhada()
-geografica_detalhada = analise_geografica_detalhada()
-clientes_detalhado = analise_clientes_detalhada()
-temporal_avancada = analise_temporal_avancada()
+if __name__ == '__main__':
+    print("Calculando métricas avançadas...")
 
-# Combinar com análises base
-analises_completas = {
-    **analises_base,
-    'metricas_avancadas': metricas_avancadas,
-    'produtos_detalhado': produtos_detalhado,
-    'geografica_detalhada': geografica_detalhada,
-    'clientes_detalhado': clientes_detalhado,
-    'temporal_avancada': temporal_avancada
-}
+    metricas_avancadas = calcular_metricas_avancadas()
+    produtos_detalhado = analise_produtos_detalhada()
+    geografica_detalhada = analise_geografica_detalhada()
+    clientes_detalhado = analise_clientes_detalhada()
+    temporal_avancada = analise_temporal_avancada()
 
-# Salvar
-output_path = '/home/ubuntu/dashboard-brisanet-case/data/analises_completas.json'
-with open(output_path, 'w', encoding='utf-8') as f:
-    json.dump(analises_completas, f, ensure_ascii=False, indent=2)
+    # Combinar com análises base
+    analises_completas = {
+        **analises_base,
+        'metricas_avancadas': metricas_avancadas,
+        'produtos_detalhado': produtos_detalhado,
+        'geografica_detalhada': geografica_detalhada,
+        'clientes_detalhado': clientes_detalhado,
+        'temporal_avancada': temporal_avancada
+    }
 
-print(f"Análises completas salvas em: {output_path}")
-print("\nResumo das métricas avançadas:")
-print(f"- Tendência de crescimento: {metricas_avancadas['tendencia_slope']:.2f} por mês")
-print(f"- R² da tendência: {metricas_avancadas['tendencia_r_squared']:.4f}")
-print(f"- Crescimento médio mensal: {metricas_avancadas['crescimento_medio_mensal']:.2f}%")
-print(f"- Volatilidade: {metricas_avancadas['volatilidade']:.2f}%")
-print(f"\nSegmentos RFV identificados: {len(clientes_detalhado['segmentos_rfv'])}")
-print(f"Produtos analisados: {len(produtos_detalhado)}")
+    # Salvar
+    output_path = '/home/ubuntu/dashboard-brisanet-case/data/analises_completas.json'
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(analises_completas, f, ensure_ascii=False, indent=2)
 
+    print(f"Análises completas salvas em: {output_path}")
+    print("\nResumo das métricas avançadas:")
+    print(f"- Tendência de crescimento: {metricas_avancadas['tendencia_slope']:.2f} por mês")
+    print(f"- R² da tendência: {metricas_avancadas['tendencia_r_squared']:.4f}")
+    print(f"- Crescimento médio mensal: {metricas_avancadas['crescimento_medio_mensal']:.2f}%")
+    print(f"- Volatilidade: {metricas_avancadas['volatilidade']:.2f}%")
+    print(f"\nSegmentos RFV identificados: {len(clientes_detalhado['segmentos_rfv'])}")
+    print(f"Produtos analisados: {len(produtos_detalhado)}")
